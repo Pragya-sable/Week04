@@ -1,6 +1,6 @@
 package com.mapinterface.groupobjectbyproperty;
 import java.util.*;
-public class Group {
+public class GroupByDepartment {
     public Map<Department, List<Employee>> groupByDepartment(List<Employee> employees) {
         // Create a map to store the grouped employees by department
         Map<Department, List<Employee>> groupedByDepartment = new HashMap<>();

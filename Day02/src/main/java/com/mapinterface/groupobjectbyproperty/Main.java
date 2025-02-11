@@ -1,6 +1,6 @@
 package com.mapinterface.groupobjectbyproperty;
 import java.util.*;
-public class GroupByDepartment {
+public class Main {
     public static void main(String[] args) {
         // Create departments
         Department hr = new Department("HR");
@@ -13,7 +13,7 @@ public class GroupByDepartment {
         employees.add(new Employee("Carol", hr));
 
         // Group employees by department
-        Map<Department, List<Employee>> groupedByDepartment = new Group().groupByDepartment(employees);
+        Map<Department, List<Employee>> groupedByDepartment = new GroupByDepartment().groupByDepartment(employees);
 
         // Check the groupings for HR
         List<Employee> hrEmployees = groupedByDepartment.get(hr);
