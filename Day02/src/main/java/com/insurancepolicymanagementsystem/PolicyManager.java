@@ -1,71 +1,104 @@
 package com.insurancepolicymanagementsystem;
 import java.util.*;
-import java.time.LocalDate;
-
+import java.util.stream.Collectors;
 
 public class PolicyManager {
-    private Map<String, Policy> policyMap = new HashMap<>();
-    private LinkedHashMap<String, Policy> linkedPolicyMap = new LinkedHashMap<>();
-    private TreeMap<LocalDate, List<Policy>> expiryPolicyMap = new TreeMap<>();
+     Set<Policy> hashSetPolicies;         // Set for fast lookups (HashSet)
+     Set<Policy> linkedHashSetPolicies;  // Set that maintains insertion order (LinkedHashSet)
+     Set<Policy> treeSetPolicies;        // Set that keeps policies sorted by expiry date (TreeSet)
 
-    // Adding a policy
+    // Constructor initializes the sets
+    public PolicyManager() {
+        this.hashSetPolicies = new HashSet<>();           // For quick lookups
+        this.linkedHashSetPolicies = new LinkedHashSet<>(); // Maintains insertion order
+        this.treeSetPolicies = new TreeSet<>(Comparator.comparing(Policy::getExpiryDate)); // Sorts by expiry date
+    }
+
+    // Method to add a policy to all sets
     public void addPolicy(Policy policy) {
-        policyMap.put(policy.getPolicyNumber(), policy);
-        linkedPolicyMap.put(policy.getPolicyNumber(), policy);
-
-        // Storing in TreeMap based on expiry date
-        expiryPolicyMap.computeIfAbsent(policy.getExpiryDate(), k -> new ArrayList<>()).add(policy);
+        hashSetPolicies.add(policy);              // Adds to HashSet (quick lookup)
+        linkedHashSetPolicies.add(policy);       // Adds to LinkedHashSet (maintains insertion order)
+        treeSetPolicies.add(policy);             // Adds to TreeSet (sorted by expiry date)
     }
 
-    // Retrieveing policy by policy number
-    public Policy getPolicyByNumber(String policyNumber) {
-        return policyMap.get(policyNumber);
+    // Method to display all policies from each set
+    public void displayAllPolicies() {
+        System.out.println("HashSet Policies:");
+        hashSetPolicies.forEach(System.out::println);  // Print policies from HashSet
+
+        System.out.println("LinkedHashSet Policies:");
+        linkedHashSetPolicies.forEach(System.out::println);  // Print policies from LinkedHashSet
+
+        System.out.println("TreeSet Policies:");
+        treeSetPolicies.forEach(System.out::println);  // Print policies from TreeSet
     }
 
-    // Listing all policies expiring in the next 30 days
-    public List<Policy> getPoliciesExpiringSoon() {
-        List<Policy> expiringSoon = new ArrayList<>();
-        LocalDate today = LocalDate.now();
-        LocalDate thresholdDate = today.plusDays(30);
+    // Method to display policies that are expiring soon
+    public void displayPoliciesExpiringSoon() {
+        Date currentDate = new Date();  // Current date
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, 30);  // Add 30 days to the current date
+        Date thirtyDaysFromNow = cal.getTime(); // Get the date 30 days from now
 
-        for (Map.Entry<LocalDate, List<Policy>> entry : expiryPolicyMap.entrySet()) {
-            if (!entry.getKey().isAfter(thresholdDate)) {
-                expiringSoon.addAll(entry.getValue());
-            }
+        System.out.println("Policies expiring soon:");
+        treeSetPolicies.stream()
+                .filter(policy -> policy.getExpiryDate().before(thirtyDaysFromNow))  // Filter policies expiring soon
+                .forEach(System.out::println);  // Display matching policies
+    }
+
+    // Method to retrieve policies by their coverage type (e.g., Health, Auto, etc.)
+    public void displayPoliciesByCoverageType(String coverageType) {
+        System.out.println("Policies with coverage type: " + coverageType);
+        hashSetPolicies.stream()
+                .filter(policy -> policy.getCoverageType().equalsIgnoreCase(coverageType))  // Filter by coverage type
+                .forEach(System.out::println);  // Display matching policies
+    }
+
+    // Method to find and display duplicate policies (based on policy number)
+    public void displayDuplicatePolicies() {
+        // Group policies by policy number and filter those that appear more than once
+        Map<String, List<Policy>> policyGroups = hashSetPolicies.stream()
+                .collect(Collectors.groupingBy(Policy::getPolicyNumber)); // Group by policy number
+
+        System.out.println("Duplicate Policies:");
+        policyGroups.entrySet().stream()
+                .filter(entry -> entry.getValue().size() > 1)  // Find duplicates
+                .flatMap(entry -> entry.getValue().stream())  // Flatten duplicate policies
+                .forEach(System.out::println);  // Display duplicates
+    }
+
+    // Method to compare the performance of HashSet, LinkedHashSet, and TreeSet in terms of adding policies
+    public void comparePerformance() {
+        // Add 10000 policies to HashSet and measure the time taken
+        long startTime = System.nanoTime();
+        for (int i = 0; i < 10000; i++) {
+            Policy policy = new Policy("Policy" + i, "Name" + i, new Date(), "Health", 100.0);
+            hashSetPolicies.add(policy);
         }
-        return expiringSoon;
-    }
+        long hashSetAddTime = System.nanoTime() - startTime; // Time taken to add to HashSet
 
-    // Listing all policies for a specific policyholder
-    public List<Policy> getPoliciesByHolder(String policyHolderName) {
-        List<Policy> holderPolicies = new ArrayList<>();
-        for (Policy policy : policyMap.values()) {
-            if (policy.getPolicyHolderName().equalsIgnoreCase(policyHolderName)) {
-                holderPolicies.add(policy);
-            }
+        // Add 10000 policies to LinkedHashSet and measure the time taken
+        startTime = System.nanoTime();
+        for (int i = 0; i < 10000; i++) {
+            Policy policy = new Policy("Policy" + i, "Name" + i, new Date(), "Health", 100.0);
+            linkedHashSetPolicies.add(policy);
         }
-        return holderPolicies;
-    }
+        long linkedHashSetAddTime = System.nanoTime() - startTime; // Time taken to add to LinkedHashSet
 
-    // Removing expired policies
-    public void removeExpiredPolicies() {
-        LocalDate today = LocalDate.now();
-        Iterator<Map.Entry<LocalDate, List<Policy>>> iterator = expiryPolicyMap.entrySet().iterator();
+        // Add 10000 policies to TreeSet and measure the time taken
+        startTime = System.nanoTime();
+        for (int i = 0; i < 10000; i++) {
+            Policy policy = new Policy("Policy" + i, "Name" + i, new Date(), "Health", 100.0);
+            treeSetPolicies.add(policy);
+        }
+        long treeSetAddTime = System.nanoTime() - startTime; // Time taken to add to TreeSet
 
-        while (iterator.hasNext()) {
-            Map.Entry<LocalDate, List<Policy>> entry = iterator.next();
-            if (entry.getKey().isBefore(today)) {
-                for (Policy policy : entry.getValue()) {
-                    policyMap.remove(policy.getPolicyNumber());
-                    linkedPolicyMap.remove(policy.getPolicyNumber());
-                }
-                iterator.remove();
-            }
-        }
-    }
-    public void displayPoliciesInInsertionOrder() {
-        for (Policy policy : linkedPolicyMap.values()) {
-            System.out.println(policy);
-        }
+        // Print performance comparison
+        System.out.println("Time to add 10000 policies:");
+        System.out.println("HashSet: " + hashSetAddTime + " ns");
+        System.out.println("LinkedHashSet: " + linkedHashSetAddTime + " ns");
+        System.out.println("TreeSet: " + treeSetAddTime + " ns");
+
+        // Similar measurements can be done for removal and searching operations
     }
 }

@@ -1,37 +1,29 @@
 package com.insurancepolicymanagementsystem;
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        PolicyManager manager = new PolicyManager();
+        // Create an instance of the PolicyManager to manage insurance policies
+        PolicyManager policyManager = new PolicyManager();
 
-        // Adding policies
-        manager.addPolicy(new Policy("P101", "pratham", LocalDate.of(2024, 5, 20)));
-        manager.addPolicy(new Policy("P102", "Ajay", LocalDate.of(2024, 6, 10)));
-        manager.addPolicy(new Policy("P103", "suraj", LocalDate.of(2024, 4, 15))); // Expired
-        manager.addPolicy(new Policy("P104", "vivek", LocalDate.of(2024, 5, 25)));
+        // Add sample policies to the system
+        policyManager.addPolicy(new Policy("P123", "John Doe", new Date(1679074800000L), "Health", 300.0));
+        policyManager.addPolicy(new Policy("P124", "Jane Doe", new Date(1679407200000L), "Auto", 500.0));
+        policyManager.addPolicy(new Policy("P125", "Alice Smith", new Date(1682002800000L), "Home", 400.0));
 
-        // fetching a policy
-        System.out.println("\nPolicy P101 details: " + manager.getPolicyByNumber("P101"));
+        // Display all policies stored in different sets
+        policyManager.displayAllPolicies();
 
-        // Listing policies expiring in the next 30 days
-        System.out.println("\nPolicies expiring in the next 30 days:");
-        for (Policy policy : manager.getPoliciesExpiringSoon()) {
-            System.out.println(policy);
-        }
+        // Display policies expiring soon (within the next 30 days)
+        policyManager.displayPoliciesExpiringSoon();
 
-        // Listing policies for a specific policyholder
-        System.out.println("\nPolicies for John Doe:");
-        for (Policy policy : manager.getPoliciesByHolder("John Doe")) {
-            System.out.println(policy);
-        }
+        // Display policies filtered by a specific coverage type
+        policyManager.displayPoliciesByCoverageType("Auto");
 
-        // Removing expired policies
-        System.out.println("\nRemoving expired policies...");
-        manager.removeExpiredPolicies();
+        // Display any duplicate policies based on policy number
+        policyManager.displayDuplicatePolicies();
 
-        // Displaying all policies in insertion order
-        System.out.println("\nPolicies after removing expired ones (in insertion order):");
-        manager.displayPoliciesInInsertionOrder();
+        // Perform a performance comparison for adding policies to different sets
+        policyManager.comparePerformance();
     }
 }
