@@ -1,4 +1,4 @@
-package com.extractprogramminglanguagenamesfromatext;
+package regex.extractprogramminglanguagenamesfromatext;
 import java.util.*;
 
 public class Main {
