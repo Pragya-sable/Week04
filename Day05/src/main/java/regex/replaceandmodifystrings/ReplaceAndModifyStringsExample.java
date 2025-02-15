@@ -1,4 +1,4 @@
-package com.replaceandmodifystrings;
+package regex.replaceandmodifystrings;
 
 public class ReplaceAndModifyStringsExample {
     public static String replaceMultipleSpaces(String text) {
