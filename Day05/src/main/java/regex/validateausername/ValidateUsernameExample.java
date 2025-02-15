@@ -1,4 +1,4 @@
-package com.validateausername;
+package regex.validateausername;
 
 import java.util.regex.*;
 // A valid username:

@@ -1,4 +1,4 @@
-package com.validateausername;
+package regex.validateausername;
 
 public class Main {
     public static void main(String[] args) {
