@@ -1,4 +1,4 @@
-package com.extractcurrencyvaluesfromatext;
+package regex.extractcurrencyvaluesfromatext;
 
 import java.util.List;
 
