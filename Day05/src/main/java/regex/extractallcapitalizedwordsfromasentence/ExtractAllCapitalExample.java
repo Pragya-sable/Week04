@@ -1,4 +1,4 @@
-package com.extractallcapitalizedwordsfromasentence;
+package regex.extractallcapitalizedwordsfromasentence;
 
 import java.util.ArrayList;
 import java.util.List;
