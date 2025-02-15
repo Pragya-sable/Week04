@@ -1,4 +1,4 @@
-package com.validateacreditcardnumber;
+package regex.validateacreditcardnumber;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
