@@ -1,4 +1,4 @@
-package com.validateanipaddress;
+package regex.validateanipaddress;
 
 public class Main {
 
