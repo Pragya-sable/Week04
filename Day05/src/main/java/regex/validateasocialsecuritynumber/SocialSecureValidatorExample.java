@@ -1,4 +1,4 @@
-package com.validateasocialsecuritynumber;
+package regex.validateasocialsecuritynumber;
 import java.util.regex.*;
 public class SocialSecureValidatorExample {
     public static boolean isValidSSN(String ssn) {
