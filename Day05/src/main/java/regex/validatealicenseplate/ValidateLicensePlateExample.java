@@ -1,4 +1,4 @@
-package com.validatealicenseplate;
+package regex.validatealicenseplate;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

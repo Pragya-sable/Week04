@@ -1,6 +1,4 @@
-package com.validatealicenseplate;
-
-import com.validateausername.ValidateUsernameExample;
+package regex.validatealicenseplate;
 
 public class Main {
     public static void main(String[] args) {
