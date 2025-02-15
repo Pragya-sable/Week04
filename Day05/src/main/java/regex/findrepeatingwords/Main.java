@@ -1,4 +1,4 @@
-package com.findrepeatingwords;
+package regex.findrepeatingwords;
 
 import java.util.List;
 
