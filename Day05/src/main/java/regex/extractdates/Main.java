@@ -1,4 +1,4 @@
-package com.extractdates;
+package regex.extractdates;
 
 import java.util.List;
 
