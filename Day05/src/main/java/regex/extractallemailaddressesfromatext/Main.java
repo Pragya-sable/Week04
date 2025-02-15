@@ -1,4 +1,4 @@
-package com.extractallemailaddressesfromatext;
+package regex.extractallemailaddressesfromatext;
 
 import java.util.List;
 
