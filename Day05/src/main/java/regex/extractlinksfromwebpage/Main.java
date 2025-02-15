@@ -1,4 +1,4 @@
-package com.extractlinksfromwebpage;
+package regex.extractlinksfromwebpage;
 
 import java.util.List;
 
