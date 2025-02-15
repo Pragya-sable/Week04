@@ -1,4 +1,4 @@
-package com.validateahexcolorcode;
+package regex.validateahexcolorcode;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

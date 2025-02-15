@@ -1,4 +1,4 @@
-package com.validateahexcolorcode;
+package regex.validateahexcolorcode;
 
 
 public class Main {
