@@ -1,4 +1,4 @@
-package com.reflection.basic.calculatorreflection.classinspector;
+package com.reflection.basic.classinspector;
 
 
 import static org.junit.jupiter.api.Assertions.*;

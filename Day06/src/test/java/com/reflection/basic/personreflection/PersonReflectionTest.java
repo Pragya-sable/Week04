@@ -1,8 +1,6 @@
-package com.reflection.basic.calculatorreflection.personreflection;
+package com.reflection.basic.personreflection;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import com.reflection.basic.personreflection.Person;
 import org.junit.jupiter.api.Test;
 
 
